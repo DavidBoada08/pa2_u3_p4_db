@@ -71,6 +71,8 @@ public class Pa2U3P4DbApplication implements CommandLineRunner{
 		matri1.setEstudiante(estu1);
 		matri1.setNumero("uno");
 		
+		
+		
 		this.iMatriculaService.guardar(matri1);
 		
 		
