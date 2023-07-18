@@ -1,27 +1,35 @@
 package com.example;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.banco.repo.modelo.CuentaBancaria;
-import com.example.banco.repo.modelo.Propietario;
-import com.example.banco.service.ICuentaBancariaService;
-import com.example.banco.service.ITransferenciaService;
+import com.example.matri.repo.modelo.Estudiante;
+import com.example.matri.repo.modelo.Materia;
+import com.example.matri.repo.modelo.Matricula;
+import com.example.matri.repo.modelo.Provincia;
+import com.example.matri.repo.modelo.Semestre;
+import com.example.matri.service.IEstudianteService;
+import com.example.matri.service.IMateriaService;
+import com.example.matri.service.IMatriculaService;
 
 @SpringBootApplication
 public class Pa2U3P4DbApplication implements CommandLineRunner{
 	
 	
 	@Autowired
-	private ICuentaBancariaService cuentaBancariaService;
+	private IEstudianteService iestudianteService;
 	
 	@Autowired
-	private ITransferenciaService transferenciaService;
-
+	private IMateriaService iMateriaService;
+	
+	@Autowired
+	private IMatriculaService iMatriculaService;
+	
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U3P4DbApplication.class, args);
@@ -29,58 +37,45 @@ public class Pa2U3P4DbApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		/*
-		Propietario pro1 = new Propietario();
-		pro1.setApellido("Boada");
-		pro1.setCedula("1720030723");
-		pro1.setNombre("David");
+		
+		Provincia prov1 = new Provincia();
+		prov1.setCanton("Quito");
+		prov1.setNombre("Pichincha");
+		prov1.setKm(12458.25);
+		
+		Estudiante estu1= new Estudiante();
+		
+		estu1.setApellido("Boada");
+		estu1.setCedula("1720030723");
+		estu1.setNombre("David");
+		estu1.setProvincia(prov1);
 		
 		
-		Propietario pro2 = new Propietario();
-		pro1.setApellido("Boada");
-		pro1.setCedula("1720030715");
-		pro1.setNombre("Clare");
 		
-		CuentaBancaria cta1 = new CuentaBancaria();
-		cta1.setNumero("1010101010101");
-		cta1.setSaldo(new BigDecimal(200));
-		cta1.setTipo("A");
-		cta1.setPropietario(pro1);
+		Semestre seme1 = new Semestre();
+		seme1.setFacultad("Ciencias Fisicas");
+		seme1.setNumero("Primero");
+		seme1.setUniversidad("UCE");
 		
-		this.cuentaBancariaService.guardarCta(cta1);
+		Materia mate1 = new Materia();
+		mate1.setCapacidad(50);
+		mate1.setNombre("Fisica");
+		mate1.setCodigo("UCF001");
+		mate1.setSemestre(seme1);
+
 		
-		CuentaBancaria cta2 = new CuentaBancaria();
-		cta2.setNumero("1010101010102");
-		cta2.setSaldo(new BigDecimal(100));
-		cta2.setTipo("A");
-		cta2.setPropietario(pro2);
+		Matricula matri1 = new Matricula();
+		matri1.setBeca("Aplica");
+		matri1.setFecha(LocalDateTime.now());
+		matri1.setMateria(mate1);
+		matri1.setEstudiante(estu1);
+		matri1.setNumero("uno");
 		
-		this.cuentaBancariaService.guardarCta(cta2);*/
-		
-		
-		System.out.println("Cuenta origen ");
-		System.out.println(this.cuentaBancariaService.buscar("1010101010101"));
-		System.out.println("\n\n");
+		this.iMatriculaService.guardar(matri1);
 		
 		
-		System.out.println("Cuenta destino ");
-		System.out.println(this.cuentaBancariaService.buscar("1010101010102"));	
-		
-		System.out.println("\n\n");
 		
 	
-		
-		transferenciaService.hacerTransferencia("1010101010101", "1010101010102", new BigDecimal(50));
-		
-	
-		
-		System.out.println("\n\n");
-		System.out.println("ACTUALIZACION DE CUENTAS");
-		System.out.println("Cuenta origen ");
-		System.out.println(this.cuentaBancariaService.buscar("1010101010101"));
-		System.out.println("Cuenta destino ");
-		System.out.println(this.cuentaBancariaService.buscar("1010101010102"));
 		
 		
 	}
