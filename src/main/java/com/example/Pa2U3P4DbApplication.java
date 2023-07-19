@@ -38,6 +38,7 @@ public class Pa2U3P4DbApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
+	/*
 		Provincia prov1 = new Provincia();
 		prov1.setCanton("Quito");
 		prov1.setNombre("Pichincha");
@@ -69,12 +70,27 @@ public class Pa2U3P4DbApplication implements CommandLineRunner{
 		matri1.setFecha(LocalDateTime.now());
 		matri1.setMateria(mate1);
 		matri1.setEstudiante(estu1);
-		matri1.setNumero("uno");
+		matri1.setNumero("M0001");
 		
 		
 		
 		this.iMatriculaService.guardar(matri1);
+		*/
+		System.out.println("\n");
+		Estudiante estu1 = this.iestudianteService.buscar("1720030723");
+		System.out.println(estu1);
 		
+		System.out.println("\n");
+		//System.out.println(this.iestudianteService.buscarPorCedula(estu1));
+		//System.out.println("\n");
+		//typedQuery
+		System.out.println(this.iMateriaService.buscarPorCodigo("UCF001"));
+		
+		System.out.println("\n");
+		//Query
+		System.out.println(this.iMateriaService.buscarPorCodigo2("UCF001"));
+		
+	
 		
 		
 	

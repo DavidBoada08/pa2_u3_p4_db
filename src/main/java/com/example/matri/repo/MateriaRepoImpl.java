@@ -26,7 +26,14 @@ public class MateriaRepoImpl implements IMateriaRepo {
 
 	@Override
 	public List<Materia> seleccionarPorCodigo(String codigo) {		
-		TypedQuery<Materia> myQuery = this.entityManager.createQuery("SELECT m FROM Matricula m WHERE m.codigo = :datoCodigo", Materia.class);
+		TypedQuery<Materia> myQuery = this.entityManager.createQuery("SELECT m FROM Materia m WHERE m.codigo = :datoCodigo", Materia.class);
+		myQuery.setParameter("datoCodigo", codigo);		
+		return myQuery.getResultList();
+	}
+	
+	@Override
+	public List<Materia> seleccionarPorCodigo2(String codigo) {		
+		Query myQuery = this.entityManager.createQuery("SELECT m FROM Materia m WHERE m.codigo = :datoCodigo");
 		myQuery.setParameter("datoCodigo", codigo);		
 		return myQuery.getResultList();
 	}

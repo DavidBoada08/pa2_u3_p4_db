@@ -24,5 +24,11 @@ public class MateriaServiceImpl implements IMateriaService {
 		
 		return this.materiaRepo.seleccionarPorCodigo(codigo);
 	}
+	
+	@Override
+	public List<Materia> buscarPorCodigo2(String codigo) {
+		
+		return this.materiaRepo.seleccionarPorCodigo(codigo);
+	}
 
 }

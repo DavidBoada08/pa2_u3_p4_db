@@ -8,6 +8,10 @@ public interface IEstudianteRepo {
 
 	
 	public void insertar (Estudiante estudiante);
-	public List<Estudiante> seleccionarPorCedula (String cedula);
+	
+	public Estudiante seleccionar(String cedula);
+	
+	public List<Estudiante> seleccionarPorCedula (Estudiante estudiante);
+	
 	
 }
