@@ -1,17 +1,17 @@
 package com.example;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import com.example.matri.repo.modelo.Estudiante;
-import com.example.matri.repo.modelo.Materia;
-import com.example.matri.repo.modelo.Matricula;
-import com.example.matri.repo.modelo.Provincia;
-import com.example.matri.repo.modelo.Semestre;
+import com.example.banco.repo.modelo.CuentaBancaria;
+import com.example.banco.repo.modelo.Propietario;
+import com.example.banco.service.ICuentaBancariaService;
+import com.example.banco.service.ITransferenciaService;
 import com.example.matri.service.IEstudianteService;
 import com.example.matri.service.IMateriaService;
 import com.example.matri.service.IMatriculaService;
@@ -29,7 +29,11 @@ public class Pa2U3P4DbApplication implements CommandLineRunner{
 	@Autowired
 	private IMatriculaService iMatriculaService;
 	
+	@Autowired
+	private ITransferenciaService iTransferenciaService;
 	
+	@Autowired
+	private ICuentaBancariaService bancariaService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U3P4DbApplication.class, args);
@@ -38,63 +42,23 @@ public class Pa2U3P4DbApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-	/*
-		Provincia prov1 = new Provincia();
-		prov1.setCanton("Quito");
-		prov1.setNombre("Pichincha");
-		prov1.setKm(12458.25);
-		
-		Estudiante estu1= new Estudiante();
-		
-		estu1.setApellido("Boada");
-		estu1.setCedula("1720030723");
-		estu1.setNombre("David");
-		estu1.setProvincia(prov1);
-		
-		
-		
-		Semestre seme1 = new Semestre();
-		seme1.setFacultad("Ciencias Fisicas");
-		seme1.setNumero("Primero");
-		seme1.setUniversidad("UCE");
-		
-		Materia mate1 = new Materia();
-		mate1.setCapacidad(50);
-		mate1.setNombre("Fisica");
-		mate1.setCodigo("UCF001");
-		mate1.setSemestre(seme1);
-
-		
-		Matricula matri1 = new Matricula();
-		matri1.setBeca("Aplica");
-		matri1.setFecha(LocalDateTime.now());
-		matri1.setMateria(mate1);
-		matri1.setEstudiante(estu1);
-		matri1.setNumero("M0001");
-		
-		
-		
-		this.iMatriculaService.guardar(matri1);
-		*/
-		System.out.println("\n");
-		Estudiante estu1 = this.iestudianteService.buscar("1720030723");
-		System.out.println(estu1);
-		
-		System.out.println("\n");
-		//System.out.println(this.iestudianteService.buscarPorCedula(estu1));
-		//System.out.println("\n");
-		//typedQuery
-		System.out.println(this.iMateriaService.buscarPorCodigo("UCF001"));
-		
-		System.out.println("\n");
-		//Query
-		System.out.println(this.iMateriaService.buscarPorCodigo2("UCF001"));
-		
 	
 		
 		
-	
+		System.out.println("Main:     "+TransactionSynchronizationManager.isActualTransactionActive());		
 		
+		Propietario  pro = new Propietario();
+		
+		pro.setApellido("b");
+		
+		
+		CuentaBancaria cb = new CuentaBancaria();
+		cb.setNumero("1232456789");
+		cb.setSaldo(new BigDecimal(2000));
+		cb.setTipo("Ahorros");
+		cb.setPropietario(pro);
+		
+		this.bancariaService.guardarCta(cb);
 		
 	}
 
