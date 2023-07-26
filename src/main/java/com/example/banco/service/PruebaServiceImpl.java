@@ -8,19 +8,18 @@ import jakarta.transaction.Transactional.TxType;
 
 @Service
 
-@Transactional(value = TxType.NEVER)
+
 public class PruebaServiceImpl implements IPruebaService{
 
 	@Override
 	public void prueba() {
-		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
-
+		
 		System.out.println("Metodo de prueba");
 		
 	}
 
 	@Override
-	@Transactional(value = TxType.MANDATORY)
+	
 	public void prueba2() {
 		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
 

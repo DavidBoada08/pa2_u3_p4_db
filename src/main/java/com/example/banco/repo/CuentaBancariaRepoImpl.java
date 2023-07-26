@@ -22,8 +22,7 @@ public class CuentaBancariaRepoImpl implements ICuentaBancariaRepo{
 	
 	@Override
 	public void insertar(CuentaBancaria cuentaBancaria) {
-		
-		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+	
 		this.entityManager.persist(cuentaBancaria);	
 		
 	}

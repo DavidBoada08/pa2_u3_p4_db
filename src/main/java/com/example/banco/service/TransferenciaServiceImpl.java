@@ -12,6 +12,7 @@ import com.example.banco.repo.modelo.CuentaBancaria;
 import com.example.banco.repo.modelo.Transferencia;
 
 import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 
 @Service
 @Transactional
@@ -24,8 +25,9 @@ public class TransferenciaServiceImpl implements ITransferenciaService {
 	private ICuentaBancariaRepo bancariaRepo;
 
 	@Override
-
+	@Transactional(value = TxType.REQUIRED)
 	public void guardar(Transferencia transferencia) {
+		
 		this.transferenciaRepo.insertar(transferencia);
 
 	}
@@ -38,8 +40,8 @@ public class TransferenciaServiceImpl implements ITransferenciaService {
 	}
 
 	@Override
-
-	public void hacerTransferencia(String ctaOrigen, String ctaDestino, BigDecimal monto) {
+@Transactional(value = TxType.REQUIRES_NEW)
+	public void hacerTransferencia(String ctaOrigen, String ctaDestino, BigDecimal monto){
 		// Obtener la cuenta de origen
 		List<CuentaBancaria> cuentasOrigen = bancariaRepo.seleccionar(ctaOrigen);
 		if (cuentasOrigen.isEmpty()) {
@@ -76,6 +78,8 @@ public class TransferenciaServiceImpl implements ITransferenciaService {
 
 		// Guardar la transferencia
 		transferenciaRepo.insertar(transferencia);
+		
+		//throw new Exception();
 	}
 
 }

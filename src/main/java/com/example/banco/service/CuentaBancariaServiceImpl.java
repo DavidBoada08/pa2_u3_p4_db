@@ -27,14 +27,14 @@ public class CuentaBancariaServiceImpl implements ICuentaBancariaService {
 	@Override
 	public void guardarCta(CuentaBancaria cuentaBancaria) {
 		System.out.println("service:  "+ TransactionSynchronizationManager.isActualTransactionActive());
-		//this.cuentaBancariaRepo.insertar(cuentaBancaria);
+		this.cuentaBancariaRepo.insertar(cuentaBancaria);
 		//this.prueba();
 		//this.iPruebaService.prueba();
 		//this.iPruebaService.prueba2();
 		//this.iPruebaService.pruebaSupports();
 		//this.iPruebaService.pruebaNoi_Supported();
 		//this.iPruebaService.pruebaRequited();
-		this.iPruebaService.pruebaRequitedNew();
+		//this.iPruebaService.pruebaRequitedNew();
 		
 	}
 

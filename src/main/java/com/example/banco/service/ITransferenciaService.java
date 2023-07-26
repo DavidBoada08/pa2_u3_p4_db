@@ -11,6 +11,6 @@ public interface ITransferenciaService {
 
 	public List<Transferencia> mostrar(String numeroCtaOrigen);
 	
-	public void hacerTransferencia (String ctaOrigen, String ctaDestino, BigDecimal monto);
+	public void hacerTransferencia (String ctaOrigen, String ctaDestino, BigDecimal monto) ;
 
 }
