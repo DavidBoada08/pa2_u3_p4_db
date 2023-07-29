@@ -20,13 +20,14 @@ public class TransferenciaRepoImpl implements ITransferenciaRepo {
 	private EntityManager entityManager;
 
 	@Override
-	@Transactional(value = TxType.REQUIRED)
+	@Transactional(value = TxType.MANDATORY)
 	public void insertar(Transferencia transferencia) {
 		this.entityManager.persist(transferencia);
-		//throw new RuntimeException();
+		//	throw new RuntimeException();
 	}
 
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public List<Transferencia> seleccionar(String numero) {
 		
 		Query myQuery = this.entityManager.createQuery("SELECT t FROM Transferencia t WHERE t.numero = :datoNumero");
