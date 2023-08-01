@@ -26,4 +26,18 @@ public class MetodosReferenciados {
 			return false;
 		}
 	}
+	
+	public String aplicar(Integer numero) {
+		String valorFinal = numero.toString().concat("Valor");
+		return valorFinal;
+		
+	}
+	
+	public Integer aplicarUnari1(Integer numero) {
+		Integer valor = numero+(numero*2);
+		return valor;
+		
+	}
+	
+	
 }

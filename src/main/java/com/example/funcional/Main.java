@@ -13,6 +13,7 @@ public class Main {
 		per.caminar();
 
 		// 1.SUPPLIER
+		LOG.info("\n\n\tInterfaz funcional Supplier");
 
 		// Clases:
 		IPersonaSupplier<String> supplier1 = new PersonaSupplierImpl();
@@ -28,16 +29,16 @@ public class Main {
 		};
 		LOG.info("Supplier Lambda2 : " + supplier3.getID());
 
-		//Metodos referenciados
-		
+		// Metodos referenciados
+
 		MetodosReferenciados metodos = new MetodosReferenciados();
-		
-		// 					//uso de los metodos referenciados los dos puntos ::
+
+		// //uso de los metodos referenciados los dos puntos ::
 		IPersonaSupplier<Integer> supplier4 = metodos::getID;
 		LOG.info("Supplier Metodo Referenciado: " + supplier4.getID());
-		
-		
+
 		// 2.CONSUMER
+		LOG.info("\n\n\tInterfaz funcional Consumer");
 
 		// clases
 		IPersonaConsumer<String> cosumer1 = new PersonaConsumerImpl();
@@ -53,15 +54,15 @@ public class Main {
 
 		LOG.info("Consumer lambda: ");
 		cosumer2.accept("Alejandro Alban");
-		
-		//Metodos referenciales
+
+		// Metodos referenciales
 		IPersonaConsumer<String> consumer3 = metodos::aceptar;
 		LOG.info("Consumer Metodos Referenciados");
 		consumer3.accept("A");
-		
 
 		// 3. PREDICATE
 		// Lambdas
+		LOG.info("\n\n\tInterfaz funcional Predicate");
 		IPersonaPredicate<Integer> predicate1 = valor -> valor.compareTo(8) == 0;
 		LOG.info("PRedicate lambda: " + predicate1.evaluar(4));
 
@@ -88,14 +89,13 @@ public class Main {
 		IPersonaBiPredicate<String, String> predicate5 = (letra, cadena) -> cadena.contains(letra);
 		LOG.info("Predicate lambda 5: " + predicate5.evaluar("q", "Christian"));
 
-		
-		//metodos referenciados
-		
+		// metodos referenciados
+
 		IPersonaPredicate<Integer> preficate6 = metodos::evaluar;
-		LOG.info("Predicate Metodos Referenciados: " + preficate6.evaluar(95));		
-		
-		
+		LOG.info("Predicate Metodos Referenciados: " + preficate6.evaluar(95));
+
 		// 4. Function
+		LOG.info("\n\n\tInterfaz funcional Function");
 //						retorna 	recibe
 		IPersonaFunction<String, Integer> function1 = numero -> numero.toString();
 		LOG.info("Function lambda: " + function1.aplicar(10));
@@ -107,12 +107,22 @@ public class Main {
 
 		LOG.info("Function lambda: " + function.aplicar(10));
 
+		// Metodos Referenciados
+		IPersonaFunction<String, Integer> function3 = metodos::aplicar;
+
+		LOG.info("Function Metodos Referenciados: " + function.aplicar(10));
+
 		// 5. UnaryOperator
+		LOG.info("\n\n\tInterfaz funcional Unary Operator");
 		IPersonaUnaryOperator<Integer> unary = numero -> numero + (numero * 2);
 		LOG.info("UnaryOperator lambda: " + unary.aplicar(10));
 
 		IPersonaUnaryOperatorFuction<Integer> unary1 = numero -> numero + (numero * 2);
 		LOG.info("UnaryOperator lambda: " + unary1.aplicar(10));
+
+		// metodos Referenciados
+		IPersonaUnaryOperator<Integer> unary2 = metodos::aplicarUnari1;
+		LOG.info("UnaryOperator Metodos Refrenciados: " + unary2.aplicar(10));
 
 		// metodos referenciados
 		// subclase HighOrder
@@ -120,7 +130,6 @@ public class Main {
 		// mientras yo tenga un metodo que cumpla el contrato de la ninterfan funcional
 		// yo le puedo pasar como una implementacion de la interfaz funcional
 
-		
 	}
 
 }
