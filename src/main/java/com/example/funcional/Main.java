@@ -1,5 +1,10 @@
 package com.example.funcional;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import org.hibernate.query.spi.Limit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +39,7 @@ public class Main {
 		MetodosReferenciados metodos = new MetodosReferenciados();
 
 		// //uso de los metodos referenciados los dos puntos ::
-		IPersonaSupplier<Integer> supplier4 = metodos::getID;
+		IPersonaSupplier<Integer> supplier4 = MetodosReferenciados::getID;
 		LOG.info("Supplier Metodo Referenciado: " + supplier4.getID());
 
 		// 2.CONSUMER
@@ -56,7 +61,8 @@ public class Main {
 		cosumer2.accept("Alejandro Alban");
 
 		// Metodos referenciales
-		IPersonaConsumer<String> consumer3 = metodos::aceptar;
+
+		IPersonaConsumer<String> consumer3 = MetodosReferenciados::aceptar;
 		LOG.info("Consumer Metodos Referenciados");
 		consumer3.accept("A");
 
@@ -124,12 +130,84 @@ public class Main {
 		IPersonaUnaryOperator<Integer> unary2 = metodos::aplicarUnari1;
 		LOG.info("UnaryOperator Metodos Refrenciados: " + unary2.aplicar(10));
 
-		// metodos referenciados
-		// subclase HighOrder
+		LOG.info("\n\n\tMetodos HighOrder");
 
-		// mientras yo tenga un metodo que cumpla el contrato de la ninterfan funcional
-		// yo le puedo pasar como una implementacion de la interfaz funcional
+		// ******************************************************
+		// METODOS HIGH OREDER
 
+		LOG.info("\n\n\tMetodos HighOrder Supplier");
+		MetodosHighOrder highOrder = new MetodosHighOrder();
+		// 1. CLase
+		IPersonaSupplier<String> supplierHO = new PersonaSupplierImpl();
+		highOrder.metodo(supplierHO);
+		// 2. Lambdas
+		highOrder.metodo(() -> "1720030723 HO");
+		// 3. Metodos Referenciados
+		highOrder.metodo(MetodosReferenciados::getIDHO);
+
+		// -------------------------------------------------------------------
+		LOG.info("\n\n\tMetodos HighOrder Consumer");
+		// Clase
+
+		MetodosHighOrder.metodoConsumer(new PersonaConsumerImpl(), "Clase consumer");
+
+		IPersonaConsumer<String> cosumerHO = new PersonaConsumerImpl();
+		LOG.info("Consumer clase: ");
+		cosumerHO.accept("Christian Betancourt");
+
+		// lambda
+
+		MetodosHighOrder.metodoConsumer(cadena -> {
+			LOG.info("1");
+			LOG.info("2");
+			LOG.info(cadena);
+		}, "Lamda Consumer");
+
+		// MR
+		MetodosHighOrder.metodoConsumer(MetodosReferenciados::aceptar, "Metdo Referenciado Consumer");
+
+		// ---------------------------------------------------------------------------------------------------
+		// PROGRAMACION INTERFACES FUNCIONALES JAVA
+		// ---------------------------------------------------------------------------------------------------
+
+		// 1. Supplier
+		// Supplier
+		LOG.info("\n\n\tPROGRAMACION INTERFACES FUNCIONALES JAVA SUPPLIER");
+		Stream<String> lsita = Stream.generate(() -> "1720030723").limit(10);
+		lsita.forEach(cadena -> LOG.info(cadena));
+
+		// 2. Consumer
+		LOG.info("\n\n\tPROGRAMACION INTERFACES FUNCIONALES JAVA CONSUMER");
+		List<Integer> listaNumeros = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+				20, 21, 22, 23, 24, 25, 26, 27);
+		listaNumeros.forEach(cadena -> {
+			LOG.info("Prueba Consumer: " + cadena);
+		});
+
+		// 3. Predicate
+		LOG.info("\n\n\tPROGRAMACION INTERFACES FUNCIONALES JAVA PREDICATE");
+		Stream<Integer> listaFinal = listaNumeros.stream().filter(numero -> numero >= 5);
+		listaFinal.forEach(numero -> LOG.info("Prueba Predicate: " + numero));
+
+		// 4. Function
+		LOG.info("\n\n\tPROGRAMACION INTERFACES FUNCIONALES JAVA FUNCTION");
+		Stream<String> listaCambiada = listaNumeros.stream().map(numero -> "N: " + numero);
+		listaCambiada.forEach(cadena -> LOG.info(cadena));
+
+		Stream<String> listaCambiada1 = listaNumeros.stream().map(numero -> {
+			Integer num = 10;
+			num = numero + num;
+			return "N: " + num;
+		});
+		listaCambiada1.forEach(cadena -> LOG.info(cadena));
+
+		// 5. UnaryOperator
+		LOG.info("\n\n\tPROGRAMACION INTERFACES FUNCIONALES JAVA UnaryOperator");
+		Stream<Integer> listaCambiada2 = listaNumeros.stream().map(numero -> {
+			Integer num = 10;
+			num = numero + num;
+			return num;
+		});
+		listaCambiada2.forEach(cadena -> LOG.info(cadena.toString()));
 	}
-
 }

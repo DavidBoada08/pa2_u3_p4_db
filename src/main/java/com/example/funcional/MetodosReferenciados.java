@@ -7,11 +7,17 @@ public class MetodosReferenciados {
 
 	private static final Logger LOG = LoggerFactory.getLogger(MetodosReferenciados.class);
 
-	public Integer getID() {
+	public static Integer getID() {
 		return 8;
 	}
+	
+	public static String getIDHO() {
+		LOG.info("Metodos REferenciados y HO");
+		return "Christian Boada";
+	}
 
-	public void aceptar(String arg) {
+
+	public static void  aceptar(String arg) {
 		String cadena = "Christian";
 		LOG.info(cadena+ " " +arg);
 
