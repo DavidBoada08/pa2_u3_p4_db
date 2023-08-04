@@ -170,16 +170,20 @@ public class Main {
 		LOG.info("\n\n\tDEBER");
 		LOG.info("\n\n\t Metodos HighOrder Predicate");
 		IPersonaPredicate<Integer> predicateHO = new PersonaPredicateImpl();
-		predicateHO.evaluar(100);
+		boolean result = predicateHO.evaluar(100);
+		LOG.info("Resultado de la evaluación del PREDICATE:"+ result);
+	
 		
 	
 		LOG.info("\n\n\t Metodos HighOrder Function");
 		IPersonaFunction<String, Integer> functionHO1 =  new PersonaFunctionImpl();
-		functionHO1.aplicar(50);
+		String result1 = functionHO1.aplicar(50);
+		LOG.info("Resultado:"+ result1);
 		
 		LOG.info("\n\n\t Metodos HighOrder UnaryOperator");
 		IPersonaUnaryOperator<Integer> unaryOperatorHO1 = new PersonaUnaryOperatorImpl();
-		unaryOperatorHO1.aplicar(15);
+		Integer result2 =unaryOperatorHO1.aplicar(15);
+		LOG.info("Resultado: "+ result2);
 	
 		
 		////deber falta metodos Predicate, Function y UnaryOperator
@@ -226,5 +230,31 @@ public class Main {
 			return num;
 		});
 		listaCambiada2.forEach(cadena -> LOG.info(cadena.toString()));
+		
+		
+		LOG.info("\n\n\tDEBER");
+		LOG.info("\n\n\t5 EJEMPLOS");
+		// SUPPLIER
+        Stream<String> listaDE = Stream.generate(MetodosReferenciados::ejemplo1).limit(5);
+        listaDE.forEach(LOG::info);
+
+        // CONSUMER
+        List<Integer> listaNumerosDE = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        listaNumerosDE.forEach(MetodosReferenciados::ejemplo12);
+
+        // PREDICATE
+        Stream<Integer> listaFinalDE = listaNumeros.stream().filter(MetodosReferenciados::ejemplo3);
+        listaFinalDE.forEach(numero -> LOG.info("Valor filtrado: " + numero));
+
+        // FUNCTION
+        List<String> listaNombre = Arrays.asList("Luis", "María", "Carlos", "Pedro");
+        listaNombre.forEach(MetodosReferenciados::ejemplo4);
+
+        // UnaryOperator
+        List<Integer> listaNuM = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        listaNuM.forEach(MetodosReferenciados::ejemplo5);
+		
+		
+		
 	}
 }
