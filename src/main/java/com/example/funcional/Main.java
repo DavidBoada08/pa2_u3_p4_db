@@ -90,7 +90,7 @@ public class Main {
 		// ejemplo
 		IPersonaPredicate<String> predicate4 = letra -> "David".contains(letra);
 		LOG.info("Contiente " + predicate4.evaluar("h"));
-		// Cuando resibo dos valores se agrega el bi exepto al unary y consumer
+		// Cuando recibo dos valores se agrega el bi exepto al unary y consumer
 
 		IPersonaBiPredicate<String, String> predicate5 = (letra, cadena) -> cadena.contains(letra);
 		LOG.info("Predicate lambda 5: " + predicate5.evaluar("q", "Christian"));
@@ -133,7 +133,7 @@ public class Main {
 		LOG.info("\n\n\tMetodos HighOrder");
 
 		// ******************************************************
-		// METODOS HIGH OREDER
+		// METODOS HIGH ORDER
 
 		LOG.info("\n\n\tMetodos HighOrder Supplier");
 		MetodosHighOrder highOrder = new MetodosHighOrder();
@@ -163,8 +163,26 @@ public class Main {
 			LOG.info(cadena);
 		}, "Lamda Consumer");
 
-		// MR
+
 		MetodosHighOrder.metodoConsumer(MetodosReferenciados::aceptar, "Metdo Referenciado Consumer");
+		// MR
+		
+		LOG.info("\n\n\tDEBER");
+		LOG.info("\n\n\t Metodos HighOrder Predicate");
+		IPersonaPredicate<Integer> predicateHO = new PersonaPredicateImpl();
+		predicateHO.evaluar(100);
+		
+	
+		LOG.info("\n\n\t Metodos HighOrder Function");
+		IPersonaFunction<String, Integer> functionHO1 =  new PersonaFunctionImpl();
+		functionHO1.aplicar(50);
+		
+		LOG.info("\n\n\t Metodos HighOrder UnaryOperator");
+		IPersonaUnaryOperator<Integer> unaryOperatorHO1 = new PersonaUnaryOperatorImpl();
+		unaryOperatorHO1.aplicar(15);
+	
+		
+		////deber falta metodos Predicate, Function y UnaryOperator
 
 		// ---------------------------------------------------------------------------------------------------
 		// PROGRAMACION INTERFACES FUNCIONALES JAVA
@@ -178,8 +196,7 @@ public class Main {
 
 		// 2. Consumer
 		LOG.info("\n\n\tPROGRAMACION INTERFACES FUNCIONALES JAVA CONSUMER");
-		List<Integer> listaNumeros = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-				20, 21, 22, 23, 24, 25, 26, 27);
+		List<Integer> listaNumeros = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 		listaNumeros.forEach(cadena -> {
 			LOG.info("Prueba Consumer: " + cadena);
 		});

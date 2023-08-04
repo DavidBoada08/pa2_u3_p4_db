@@ -19,7 +19,8 @@ public class MetodosHighOrder {
 		LOG.info("HighOrder Consumer: ");
 		funcion.accept(string);
 		
-
 	}
+	
 
+	
 }
