@@ -1,11 +1,13 @@
 package com.example.banco.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.banco.repo.ICuentaBancariaRepo;
@@ -76,4 +78,30 @@ public class CuentaBancariaServiceImpl implements ICuentaBancariaService {
 
 	}
 
+	@Override
+	@Async
+	public void agregarAsincrono(CuentaBancaria bancaria) {
+		//LOG.info("Hilo Service: " + Thread.currentThread().getName());
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.cuentaBancariaRepo.insertar(bancaria);		
+	}
+
+	@Override
+	@Async
+	public CompletableFuture<String> agregarAsincrono2(CuentaBancaria bancaria) {
+		//LOG.info("Hilo Service: " + Thread.currentThread().getName());
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.cuentaBancariaRepo.insertar(bancaria);		
+		return CompletableFuture.completedFuture(bancaria.getNumero());
+	}
 }
