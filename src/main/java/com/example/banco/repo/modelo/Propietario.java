@@ -1,5 +1,6 @@
 package com.example.banco.repo.modelo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -31,54 +32,95 @@ public class Propietario {
 	@Column(name = "pro_cedula")
 	private String cedula;
 	
+	@Column(name = "pro_fechaNacimiento")
+	private LocalDate fechaNacimiento;
+	
+	
 	@OneToMany(mappedBy = "propietario",cascade = CascadeType.ALL)
 	private List<CuentaBancaria> cuentaBancarias;
+
+	
 
 	public Integer getId() {
 		return id;
 	}
 
+
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+
 
 	public String getNombre() {
 		return nombre;
 	}
 
+
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+
 
 	public String getApellido() {
 		return apellido;
 	}
 
+
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
+
 
 	public String getCedula() {
 		return cedula;
 	}
 
+
+
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
+
+
+
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+
+
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+
 
 	public List<CuentaBancaria> getCuentaBancarias() {
 		return cuentaBancarias;
 	}
 
+
+
 	public void setCuentaBancarias(List<CuentaBancaria> cuentaBancarias) {
 		this.cuentaBancarias = cuentaBancarias;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Propietario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula
-				+ "]";
+				+ ", fechaNacimiento=" + fechaNacimiento + "]";
 	}
+
+
+
 	
 	
 	

@@ -1,11 +1,11 @@
 package com.example;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import com.example.banco.repo.modelo.CuentaBancaria;
 import com.example.banco.repo.modelo.Propietario;
 import com.example.banco.service.ICuentaBancariaService;
+import com.example.banco.service.IPropietarioService;
 import com.example.banco.service.ITransferenciaService;
 import com.example.matri.service.IEstudianteService;
 import com.example.matri.service.IMateriaService;
@@ -41,6 +42,9 @@ public class Pa2U3P4DbApplication implements CommandLineRunner {
 
 	@Autowired
 	private ICuentaBancariaService bancariaService;
+	
+	@Autowired
+	private IPropietarioService iPropietarioService;
 
 	private static final Logger LOG = LoggerFactory.getLogger(Pa2U3P4DbApplication.class);
 
@@ -51,53 +55,52 @@ public class Pa2U3P4DbApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// Asyncrono sin respuesta
-		/*
-		 * LOG.info("Hilo: " + Thread.currentThread().getName()); long
-		 * tiempoInicial=System.currentTimeMillis(); List<CuentaBancaria> lista = new
-		 * ArrayList<>(); for (int i = 1; i <= 10; i++) { Propietario pro = new
-		 * Propietario(); pro.setApellido("b"); pro.setCedula("123456789");
-		 * CuentaBancaria cb = new CuentaBancaria(); cb.setNumero(String.valueOf(i));
-		 * cb.setSaldo(new BigDecimal(2000)); cb.setTipo("Ahorros");
-		 * cb.setPropietario(pro); lista.add(cb);
-		 * this.bancariaService.agregarAsincrono(cb); } // fin long
-		 * tiempoFinal=System.currentTimeMillis(); long
-		 * tiempoTranscurrido=(tiempoFinal-tiempoInicial)/1000;
-		 * LOG.info("Tiempo transcurrido: "+(tiempoFinal-tiempoInicial));
-		 * LOG.info("Tiempo transcurrido: "+tiempoTranscurrido);
-		 */
 
-		// Asyncrono con respuesta
-		LOG.info("Hilo: " + Thread.currentThread().getName());
-		long tiempoInicial = System.currentTimeMillis();
-		List<CompletableFuture<String>> listaRespuesta = new ArrayList<>();
-		List<CuentaBancaria> lista = new ArrayList<>();
-		for (int i = 1; i <= 10; i++) {
-			Propietario pro = new Propietario();
-			pro.setApellido("b");
-			pro.setCedula("123456789");
-			CuentaBancaria cb = new CuentaBancaria();
-			cb.setNumero(String.valueOf(i));
-			cb.setSaldo(new BigDecimal(2000));
-			cb.setTipo("Ahorros");
-			cb.setPropietario(pro);
-			lista.add(cb);
-			CompletableFuture<String> respuesta = this.bancariaService.agregarAsincrono2(cb);
-			listaRespuesta.add(respuesta);
+
+		long tiempoInicialDb = System.currentTimeMillis();
+
+		List<CompletableFuture<Integer>> listaEdades=new ArrayList<>();
+		  Random random = new Random();
+		
+		  for (int i = 0; i < 5; i++) {
+	            Propietario pro1 = new Propietario();
+	            pro1.setApellido("Boada");
+	            pro1.setCedula("1720030723");
+	            
+	            // Genera una fecha de nacimiento aleatoria en el rango deseado
+	            int year = random.nextInt(21) + 1980; // Años entre 1980 y 2000
+	            int month = random.nextInt(12) + 1;   // Meses entre 1 y 12
+	            int day = random.nextInt(28) + 1;     // Días entre 1 y 28 
+	            pro1.setFechaNacimiento(LocalDate.of(year, month, day));
+	            
+	            pro1.setNombre("David");
+	            
+	            listaEdades.add(iPropietarioService.calcularEdad(pro1.getFechaNacimiento()));
+	        }
+
+
+		CompletableFuture.allOf(listaEdades.get(0),listaEdades.get(1),
+				listaEdades.get(2),listaEdades.get(3),
+				listaEdades.get(4));
+		
+		float suma=0;
+		for (CompletableFuture<Integer> cf : listaEdades) {
+			LOG.info("Persona su edad es : "+cf.get());
+			suma=suma+(float) cf.get();
 		}
-		//sequencia que espera que termine de procesarse todos lops hilos para obtener la respuesta
-		CompletableFuture.allOf(listaRespuesta.get(0), listaRespuesta.get(1), listaRespuesta.get(2),
-				listaRespuesta.get(3), listaRespuesta.get(4), listaRespuesta.get(5), listaRespuesta.get(6),
-				listaRespuesta.get(7), listaRespuesta.get(8), listaRespuesta.get(9));
 		
-		LOG.info("Respuesta 0:" +listaRespuesta.get(0).get());
+		LOG.info("La suma de edades es : "+suma);
 		
-		long tiempoFinal = System.currentTimeMillis();
-		long tiempoTranscurrido = (tiempoFinal - tiempoInicial) / 1000;
-		LOG.info("Tiempo transcurrido: " + (tiempoFinal - tiempoInicial));
-		LOG.info("Tiempo transcurrido: " + tiempoTranscurrido);
-		LOG.info("Se termino todo el proceso");
+		float promedio=suma/listaEdades.size();
+		LOG.info("Promedio de las 5 personas : "+(float)promedio);
 
-	}
+		long tiempoFinal = System.currentTimeMillis();
+		LOG.info("Tiempo transcurido: " + (tiempoFinal-tiempoInicialDb));
+		
+		LOG.info("Tiempo transcurido en segundos es: " + (tiempoFinal-tiempoInicialDb)/1000);
+
+
+	
+}
 
 }
